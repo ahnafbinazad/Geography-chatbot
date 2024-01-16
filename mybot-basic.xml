@@ -68,13 +68,38 @@
 
 <!-- Weather API -->
 <category>
-  <pattern>WHAT IS THE WEATHER LIKE IN *</pattern>
+  <pattern>WEATHER *</pattern>
   <template>#2$<star/></template>
 </category>
 
 <category>
   <pattern>HOW IS THE WEATHER IN *</pattern>
-  <template><srai>WHAT IS THE WEATHER LIKE IN <star/></srai></template>
+  <template>#2$<star/></template>
+</category>
+
+<category>
+  <pattern>WHAT IS THE WEATHER IN *</pattern>
+  <template>#2$<star/></template>
+</category>
+
+<category>
+  <pattern>TELL ME THE WEATHER IN *</pattern>
+  <template>#2$<star/></template>
+</category>
+
+<category>
+  <pattern>WEATHER FORECAST FOR *</pattern>
+  <template>#2$<star/></template>
+</category>
+
+<category>
+  <pattern>HOW COLD IS IT IN *</pattern>
+  <template>#2$<star/></template>
+</category>
+
+<category>
+  <pattern>HOW HOT IS IT IN *</pattern>
+  <template>#2$<star/></template>
 </category>
 
 <!-- Wikipedia API -->
@@ -103,114 +128,25 @@
   <template><srai>WHAT IS A <star/></srai></template>
 </category>
 
-<!--  History of Mathematics-->
+<!--  LOGICAL REASONING PATTERNS-->
 
+<!-- Logic input -->
 <category>
-  <pattern>WHO IS EUCLID</pattern>
-  <template>Euclid was an ancient Greek mathematician often referred to as the "Father of Geometry." He authored "Elements," a comprehensive compilation of mathematical knowledge in geometry.</template>
-</category>
-
-<category>
-  <pattern>WHAT IS THE SIGNIFICANCE OF THE GOLDEN RATIO</pattern>
-  <template>The Golden Ratio, approximately equal to 1.618, is a mathematical constant found in nature, art, and architecture. It has aesthetic and symmetrical properties.</template>
+  <pattern> I KNOW THAT * CONTAINS *</pattern>
+  <template>#31$<star index="1"/> CONTAINS <star index="2"/></template>
 </category>
 
 <category>
-  <pattern>TELL ME ABOUT THE CONTRIBUTIONS OF PYTHAGORAS</pattern>
-  <template>Pythagoras, an ancient Greek mathematician, is known for the Pythagorean theorem, which relates the lengths of the sides of a right triangle.</template>
+  <pattern> CHECK THAT * CONTAINS *</pattern>
+  <template>#32$<star index="1"/> CONTAINS <star index="2"/></template>
 </category>
 
-<category>
-  <pattern>WHEN WAS CALCULUS DEVELOPED</pattern>
-  <template>Calculus was independently developed by Sir Isaac Newton and Gottfried Wilhelm Leibniz in the late 17th century. It revolutionized mathematics and physics.</template>
-</category>
-
-<category>
-  <pattern>WHO WERE THE MATHEMATICIANS OF THE ISLAMIC GOLDEN AGE</pattern>
-  <template>During the Islamic Golden Age (8th to 14th centuries), mathematicians like Al-Khwarizmi and Omar Khayyam made significant contributions to algebra, geometry, and trigonometry.</template>
-</category>
-
-<category>
-  <pattern>WHAT IS THE HISTORY OF ZERO IN MATHEMATICS</pattern>
-  <template>The concept of zero evolved over centuries, with contributions from ancient Indian mathematicians. It became a fundamental concept in mathematics and a placeholder in numeral systems.</template>
-</category>
-
-<category>
-  <pattern>TELL ME ABOUT THE RENAISSANCE PERIOD IN MATHEMATICS</pattern>
-  <template>The Renaissance period (14th to 17th centuries) witnessed a revival of interest in classical mathematics, with figures like Leonardo da Vinci and Luca Pacioli making mathematical contributions.</template>
-</category>
-
-<category>
-  <pattern>WHO IS ADA LOVELACE, AND WHAT IS HER CONNECTION TO MATHEMATICS</pattern>
-  <template>Ada Lovelace is considered the world's first computer programmer. She worked with Charles Babbage on the Analytical Engine and wrote the first algorithm intended for implementation on a machine.</template>
-</category>
-
-<category>
-  <pattern>WHAT ROLE DID WOMEN PLAY IN THE HISTORY OF MATHEMATICS</pattern>
-  <template>Despite historical challenges, women like Emmy Noether, Hypatia, and Mary Cartwright made significant contributions to various mathematical fields.</template>
-</category>
-
-<category>
-  <pattern>EXPLAIN THE SIGNIFICANCE OF THE HILBERT'S PROBLEMS</pattern>
-  <template>Hilbert's problems were a set of 23 unsolved problems presented by David Hilbert in 1900, shaping the course of 20th-century mathematics. Some problems remain unsolved to this day.</template>
-</category>
-
-<!--  some new conversation patterns in mathematics history-->
-
-  <category>
-  <pattern>TELL ME ABOUT MATHEMATICIANS IN ANCIENT GREECE.</pattern>
-  <template>Ancient Greece produced influential mathematicians like Euclid, Pythagoras, and Archimedes who made significant contributions to geometry and number theory.</template>
-</category>
-
-<category>
-  <pattern>WHAT IS THE FUNDAMENTAL THEOREM OF CALCULUS?</pattern>
-  <template>The Fundamental Theorem of Calculus states the relationship between the derivative and the integral and plays a crucial role in calculus. It was developed by Isaac Newton and Gottfried Wilhelm Leibniz.</template>
-</category>
-
-<category>
-  <pattern>EXPLAIN THE CONCEPT OF INFINITY IN MATHEMATICS.</pattern>
-  <template>In mathematics, infinity represents an unbounded quantity. It is used in calculus, set theory, and other branches of mathematics to describe values that are limitless.</template>
-</category>
-
-<category>
-  <pattern>WHO WAS SOPHIE GERMAIN?</pattern>
-  <template>Sophie Germain was a French mathematician known for her work on elasticity theory and Fermat's Last Theorem. She made significant contributions to number theory and mathematical physics.</template>
-</category>
-
-<category>
-  <pattern>WHAT IS THE HISTORY OF ALGEBRA?</pattern>
-  <template>Algebra has a rich history dating back to ancient civilizations. It evolved over time with contributions from mathematicians like Al-Khwarizmi, who wrote a book on solving quadratic equations.</template>
-</category>
-
-<category>
-  <pattern>TELL ME ABOUT THE MATHEMATICS OF ANCIENT EGYPT.</pattern>
-  <template>Ancient Egyptians developed mathematical concepts for practical purposes, such as measuring land and building structures. The Rhind Mathematical Papyrus is an example of their mathematical knowledge.</template>
-</category>
-
-<category>
-  <pattern>WHO WERE THE MATHEMATICIANS OF THE EUROPEAN RENAISSANCE?</pattern>
-  <template>The European Renaissance saw mathematicians like Leonardo Fibonacci and Niccolò Tartaglia contributing to the revival of mathematical studies. Fibonacci introduced the famous Fibonacci sequence.</template>
-</category>
-
-<category>
-  <pattern>WHAT IS GAME THEORY IN MATHEMATICS?</pattern>
-  <template>Game theory is a branch of mathematics that studies strategic interactions between rational decision-makers. It has applications in economics, political science, and biology.</template>
-</category>
-
-<category>
-  <pattern>TELL ME ABOUT FAMOUS WOMEN MATHEMATICIANS.</pattern>
-  <template>Many women mathematicians made significant contributions throughout history, including Emmy Noether, Hypatia, and Mary Cartwright. Their work spanned various mathematical disciplines.</template>
-</category>
-
-<category>
-  <pattern>WHAT IS THE HISTORY OF MATHEMATICAL NOTATION?</pattern>
-  <template>The development of mathematical notation is crucial for expressing mathematical ideas. Symbols and notation evolved over time, with contributions from mathematicians like René Descartes and Leonhard Euler.</template>
-</category>
 
 <!-- Default reaction -->
 <category>
-  <pattern>*</pattern>
-  <template>#99$<star index="1"/></template>
+  <pattern> * </pattern>
+  <template>#99$<star index="1"/>
+  </template>
 </category>
 
 </aiml>

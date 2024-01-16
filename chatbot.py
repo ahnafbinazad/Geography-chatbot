@@ -1,0 +1,131 @@
+﻿#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from weather import Weather
+import wikipedia
+from aiml import Kernel
+from similarity_fallback import SimilarityFallback
+from knowledge_base_inferencing import KnowledgeBaseInferencing
+from text_to_speech import text_to_speech
+import os
+
+# This time import is a last resort patch to eradicate the
+# "AttributeError: module 'time' has no attribute 'clock'" error
+# This needs changing or fixing at some point
+import time
+
+time.clock = time.time
+
+# Initialize the SimilarityFallback class
+similarity_fallback = SimilarityFallback()
+
+# Initialize the Weather class
+weather = Weather()
+
+# Initialize the KnowledgeBaseInferencing class
+kb_inferencing = KnowledgeBaseInferencing()
+
+# Create a Kernel object for AIML processing
+kern = Kernel()
+
+# Set the text encoding to None for unicode I/O
+kern.setTextEncoding(None)
+
+# Use the Kernel's bootstrap() method to initialize the Kernel
+kern.bootstrap(learnFiles="mybot-basic.xml")
+
+
+# Welcome user
+print("Welcome to this chat bot. Please feel free to ask questions from me!")
+
+voiceEnabled = False
+
+voice = input('Press y to enable text to speech: ')
+if voice == 'y':
+    voiceEnabled = True
+    print('Text to speech has been enabled.')
+else:
+    print('Text to speech will remain disabled.')
+
+# Main loop
+while True:
+    # Get user input
+    try:
+        userInput = input("> ")
+        if voiceEnabled: os.system(f"say {userInput}")
+    except (KeyboardInterrupt, EOFError) as e:
+        bye = 'Bye!'
+        print(bye)
+        if voiceEnabled: os.system(f"say {bye}")
+        break
+
+    # Pre-process user input and determine the response agent (if needed)
+    responseAgent = 'aiml'
+
+    # Activate the selected response agent
+    if responseAgent == 'aiml':
+        answer = kern.respond(userInput)
+
+    # Post-process the answer for commands
+    if answer[0] == '#':
+        params = answer[1:].split('$')
+        cmd = int(params[0])
+
+
+        def case_0():
+            print(params[1])
+            exit()
+
+
+        def case_1():
+            try:
+                # Get a summary from Wikipedia based on user input
+                wSummary = wikipedia.summary(params[1], sentences=3, auto_suggest=True)
+                text_to_speech(voiceEnabled, wSummary)
+            except:
+                fail = "Sorry, I do not know that. Be more specific!"
+                text_to_speech(voiceEnabled, fail)
+
+
+        def case_2():
+            # Get weather information based on parameters
+            weather.get_weather(params, voiceEnabled)
+
+
+        def case_31():  # if input pattern is "I know that * contains *"
+            case = 31
+            kb_inferencing.process_input(case, params, ' CONTAINS ', voiceEnabled)
+
+
+        def case_32():  # if the input pattern is "check that * contains *"
+            case = 32
+            kb_inferencing.process_input(case, params, ' CONTAINS ', voiceEnabled)
+
+
+        def case_99():
+            # Fallback to similarity-based response
+            most_similar_index = similarity_fallback.calculate_cosine_similarity(userInput)
+            if most_similar_index == 0:
+                fail = "I did not get that, please try again."
+                print(fail)
+                text_to_speech(voiceEnabled, fail)
+            else:
+                relevant_answer = similarity_fallback.get_relevant_answer(most_similar_index)
+                print(relevant_answer)
+                text_to_speech(voiceEnabled, relevant_answer)
+
+
+        # Define the switch cases
+        switch_cases = {
+            0: case_0,
+            1: case_1,
+            2: case_2,
+            31: case_31,
+            32: case_32,
+            99: case_99,
+        }
+        # Call the appropriate function based on the command
+        locals().get(f'case_{cmd}', lambda: print("Invalid command"))()
+    else:
+        print(answer)
+        text_to_speech(voiceEnabled, answer)
