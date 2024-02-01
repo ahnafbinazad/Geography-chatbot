@@ -43,7 +43,7 @@ class KnowledgeBaseInferencing:
             if object.count(' ') > 0 or subject.count(' ') > 0:
                 raise ValueError(f"Invalid input format: Please use one word before or after{pattern}")
 
-            if pattern == ' CONTAINS ':
+            if pattern == ' IS ':
                 expr = read_expr(subject + '(' + object + ')')
                 return object, subject, expr
 
@@ -60,26 +60,29 @@ class KnowledgeBaseInferencing:
         if inputObject is None or subject is None or expr is None:
             return
 
-        if case == 31:
+        if case == 31:  # I know that
             # Check for contradictions before appending to the knowledge base
-            if not self.has_contradiction(expr):
-                # No contradiction, append to the knowledge base
+            result_positive = ResolutionProver().prove(expr, self.kb, verbose=False)
+            result_negative = ResolutionProver().prove(Expression.fromstring('-' + str(expr)), self.kb, verbose=False)
+
+            if result_positive:
+                output = "You are correct."
+            elif result_negative:
+                output = "That is incorrect."
+            else:
                 self.kb.append(expr)
-                output = f"OK, I will remember that, {inputObject} contains {subject}"
-            else:
-                output = f"Error: This statement contradicts existing knowledge."
+                output = f"OK, I will remember that {inputObject} is {subject}"
 
-        elif case == 32:
-            if not self.has_contradiction(expr):
-                # No contradiction, proceed with ResolutionProver
-                result = ResolutionProver().prove(expr, self.kb, verbose=False)
+        elif case == 32:  # check that
+            result_positive = ResolutionProver().prove(expr, self.kb, verbose=False)
+            result_negative = ResolutionProver().prove(Expression.fromstring('-' + str(expr)), self.kb, verbose=False)
 
-                if result:
-                    output = 'The statement is true based on my current knowledge base.'
-                else:
-                    output = 'The statement is not true based on my current knowledge base.'
+            if result_positive:
+                output = 'The statement is correct based on my current knowledge base.'
+            elif result_negative:
+                output = 'The statement is incorrect based on my current knowledge base.'
             else:
-                output = 'Error: This statement contradicts existing knowledge.'
+                output = "Sorry, I don't know that."
 
         print(output)
         text_to_speech(voiceEnabled, output)

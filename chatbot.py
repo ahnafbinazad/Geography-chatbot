@@ -34,18 +34,19 @@ kern.setTextEncoding(None)
 # Use the Kernel's bootstrap() method to initialize the Kernel
 kern.bootstrap(learnFiles="mybot-basic.xml")
 
-
 # Welcome user
 print("Welcome to this chat bot. Please feel free to ask questions from me!")
 
 voiceEnabled = False
 
-voice = input('Press y to enable text to speech: ')
-if voice == 'y':
-    voiceEnabled = True
-    print('Text to speech has been enabled.')
-else:
-    print('Text to speech will remain disabled.')
+# uncomment to enable text to speech:
+
+# voice = input('Press y to enable text to speech: ')
+# if voice == 'y':
+#     voiceEnabled = True
+#     print('Text to speech has been enabled.')
+# else:
+#     print('Text to speech will remain disabled.')
 
 # Main loop
 while True:
@@ -94,12 +95,12 @@ while True:
 
         def case_31():  # if input pattern is "I know that * contains *"
             case = 31
-            kb_inferencing.process_input(case, params, ' CONTAINS ', voiceEnabled)
+            kb_inferencing.process_input(case, params, ' IS ', voiceEnabled)
 
 
         def case_32():  # if the input pattern is "check that * contains *"
             case = 32
-            kb_inferencing.process_input(case, params, ' CONTAINS ', voiceEnabled)
+            kb_inferencing.process_input(case, params, ' IS ', voiceEnabled)
 
 
         def case_99():
