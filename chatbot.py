@@ -7,11 +7,12 @@ from aiml import Kernel
 from similarity_fallback import SimilarityFallback
 from knowledge_base_inferencing import KnowledgeBaseInferencing
 from text_to_speech import text_to_speech
+from google_search import google
 import os
 
 # This time import is a last resort patch to eradicate the
 # "AttributeError: module 'time' has no attribute 'clock'" error
-# This needs changing or fixing at some point
+# TO-DO: Remove this time import
 import time
 
 time.clock = time.time
@@ -106,14 +107,16 @@ while True:
         def case_99():
             # Fallback to similarity-based response
             most_similar_index = similarity_fallback.calculate_cosine_similarity(userInput)
-            if most_similar_index == 0:
-                fail = "I did not get that, please try again."
-                print(fail)
-                text_to_speech(voiceEnabled, fail)
-            else:
+            if most_similar_index is not None:
                 relevant_answer = similarity_fallback.get_relevant_answer(most_similar_index)
                 print(relevant_answer)
                 text_to_speech(voiceEnabled, relevant_answer)
+            else:
+                search = "I can't find the answer for that, let me ask google and give you some websites to look at."
+                print(search)
+                text_to_speech(voiceEnabled, search)
+
+                google(userInput)
 
 
         # Define the switch cases
