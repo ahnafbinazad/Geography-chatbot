@@ -36,18 +36,19 @@ kern.setTextEncoding(None)
 kern.bootstrap(learnFiles="mybot-basic.xml")
 
 # Welcome user
-print("Welcome to this chat bot. Please feel free to ask questions from me!")
+print("Welcome to the Geography chatbot. Please feel free to ask questions from me. Just make sure they are not out "
+      "of this world!")
 
 voiceEnabled = False
 
 # uncomment to enable text to speech:
 
-# voice = input('Press y to enable text to speech: ')
-# if voice == 'y':
-#     voiceEnabled = True
-#     print('Text to speech has been enabled.')
-# else:
-#     print('Text to speech will remain disabled.')
+voice = input('Press y to enable text to speech: ')
+if voice == 'y':
+    voiceEnabled = True
+    print('Text to speech has been enabled.')
+else:
+    print('Text to speech will remain disabled.')
 
 # Main loop
 while True:
@@ -83,7 +84,8 @@ while True:
             try:
                 # Get a summary from Wikipedia based on user input
                 wSummary = wikipedia.summary(params[1], sentences=3, auto_suggest=True)
-                text_to_speech(voiceEnabled, wSummary)
+                # text_to_speech(voiceEnabled, wSummary)
+                print(wSummary)
             except:
                 fail = "Sorry, I do not know that. Be more specific!"
                 text_to_speech(voiceEnabled, fail)
