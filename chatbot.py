@@ -8,8 +8,8 @@ from text_to_speech import text_to_speech
 from google_search import google
 import os
 
-# This time import is a last resort patch to eradicate the
-# "AttributeError: module 'time' has no attribute 'clock'" error
+# This time import is a last resort patch to eradicate the error
+# "AttributeError: module 'time' has no attribute 'clock'"
 # TO-DO: Remove this time import
 import time
 
@@ -26,6 +26,7 @@ kb_inferencing = KnowledgeBaseInferencing()
 
 # Create a Kernel object for AIML processing
 kern = Kernel()
+kern.verbose(False)
 
 # Set the text encoding to None for unicode I/O
 kern.setTextEncoding(None)
@@ -36,6 +37,8 @@ kern.bootstrap(learnFiles="mybot-basic.xml")
 # Welcome user
 print("Welcome to the Geography chatbot. Please feel free to ask questions from me. Just make sure they are not out "
       "of this world!")
+
+# print("Hi, I'm vlak, your geography buddy! Ask me anything about geography!")
 
 voiceEnabled = False
 
