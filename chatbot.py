@@ -38,7 +38,6 @@ kern.bootstrap(learnFiles="mybot-basic.xml")
 print("Welcome to the Geography chatbot. Please feel free to ask questions from me. Just make sure they are not out "
       "of this world!")
 
-# print("Hi, I'm vlak, your geography buddy! Ask me anything about geography!")
 
 voiceEnabled = False
 
@@ -137,6 +136,7 @@ while True:
             2: case_2,
             31: case_31,
             32: case_32,
+            51: case_51(),
             99: case_99,
         }
         # Call the appropriate function based on the command
