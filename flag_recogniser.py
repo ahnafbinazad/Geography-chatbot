@@ -2,6 +2,8 @@ import os
 import numpy as np
 from PIL import Image
 from tensorflow import keras
+import sys
+import contextlib
 
 
 # Function to preprocess the image
@@ -23,7 +25,11 @@ def load_model():
 # Function to classify the image
 def classify_image(image_path, model, class_names):
     img_array = preprocess_image(image_path)
-    prediction = model.predict(img_array)
+
+    # Suppress print output during model prediction
+    with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f):
+        prediction = model.predict(img_array)
+
     predicted_class_index = np.argmax(prediction)
     predicted_class_name = class_names[predicted_class_index]
     return predicted_class_name

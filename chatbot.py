@@ -1,7 +1,4 @@
-﻿#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-from weather import Weather
+﻿from weather import Weather
 import wikipedia
 from aiml import Kernel
 from similarity_fallback import SimilarityFallback
@@ -87,8 +84,11 @@ while True:
                 # text_to_speech(voiceEnabled, wSummary)
                 print(wSummary)
             except:
-                fail = "Sorry, I do not know that. Be more specific!"
-                text_to_speech(voiceEnabled, fail)
+                search = "I can't find the answer for that, let me ask google and give you some websites to look at."
+                print(search)
+                text_to_speech(voiceEnabled, search)
+
+                google(userInput)
 
 
         def case_2():
