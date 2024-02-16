@@ -84,7 +84,7 @@ while True:
         def case_1():
             try:
                 # Get a summary from Wikipedia based on user input
-                wSummary = wikipedia.summary(params[1], sentences=3, auto_suggest=True)
+                wSummary = wikipedia.summary(params[1], sentences=1, auto_suggest=True)
                 # text_to_speech(voiceEnabled, wSummary)
                 print(wSummary)
             except:
