@@ -129,8 +129,6 @@
 </category>
 
 <!--  LOGICAL REASONING PATTERNS-->
-
-<!-- Logic input -->
 <category>
   <pattern> I KNOW THAT * IS *</pattern>
   <template>#31$<star index="1"/> IS <star index="2"/></template>
@@ -139,6 +137,12 @@
 <category>
   <pattern> CHECK THAT * IS *</pattern>
   <template>#32$<star index="1"/> IS <star index="2"/></template>
+</category>
+
+<!--Flag Recognition-->
+<category>
+  <pattern> WHAT FLAG IS THIS</pattern>
+  <template>#51</template>
 </category>
 
 

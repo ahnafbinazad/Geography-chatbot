@@ -1,4 +1,5 @@
-﻿from weather import Weather
+﻿from flag_recogniser import flag_recogniser
+from weather import Weather
 import wikipedia
 from aiml import Kernel
 from similarity_fallback import SimilarityFallback
@@ -104,6 +105,11 @@ while True:
         def case_32():  # if the input pattern is "check that * contains *"
             case = 32
             kb_inferencing.process_input(case, params, ' IS ', voiceEnabled)
+
+
+        def case_51():  # case for flag recognition
+            flag_recogniser(voiceEnabled)
+            return
 
 
         def case_99():

@@ -5,6 +5,8 @@ from tensorflow import keras
 import sys
 import contextlib
 
+from text_to_speech import text_to_speech
+
 
 # Function to preprocess the image
 def preprocess_image(image_path):
@@ -35,7 +37,7 @@ def classify_image(image_path, model, class_names):
     return predicted_class_name
 
 
-def flag_recogniser():
+def flag_recogniser(voiceEnabled):
     # Ask the user for a file path
     file_path = input("Please enter the file path of the image: ")
 
@@ -54,11 +56,12 @@ def flag_recogniser():
     predicted_class_name = classify_image(file_path, model, countries)
 
     # Print the predicted class
-    print("The image is classified as:", predicted_class_name)
+    output = f"That is the flag of {predicted_class_name}"
 
-    return predicted_class_name
+    print(output)
+    text_to_speech(voiceEnabled, output)
 
 
-if __name__ == "__main__":
-    while True:
-        flag_recogniser()
+# if __name__ == "__main__":
+#     while True:
+#         flag_recogniser()

@@ -60,7 +60,7 @@ class KnowledgeBaseInferencing:
         if inputObject is None or subject is None or expr is None:
             return
 
-        if case == 31:  # I know that
+        if case == 31:  # statements with "I know that"
             # Check for contradictions before appending to the knowledge base
             result_positive = ResolutionProver().prove(expr, self.kb, verbose=False)
             result_negative = ResolutionProver().prove(Expression.fromstring('-' + str(expr)), self.kb, verbose=False)
@@ -73,7 +73,7 @@ class KnowledgeBaseInferencing:
                 self.kb.append(expr)
                 output = f"OK, I will remember that {inputObject} is {subject}"
 
-        elif case == 32:  # check that
+        elif case == 32:  # statements with "check that"
             result_positive = ResolutionProver().prove(expr, self.kb, verbose=False)
             result_negative = ResolutionProver().prove(Expression.fromstring('-' + str(expr)), self.kb, verbose=False)
 
