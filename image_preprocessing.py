@@ -20,7 +20,6 @@ def load_images_from_directory(directory):
                     # Load image and preprocess if needed
                     with Image.open(image_path) as image:
                         # Resize, convert to grayscale, or perform other preprocessing as necessary
-                        # For example:
                         image = image.resize((28, 28))  # Resize image to (28, 28)
                         image = np.array(image) / 255.0  # Normalize pixel values
                         images.append(image)

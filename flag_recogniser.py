@@ -40,9 +40,10 @@ def classify_image(image_path, model, class_names):
 def flag_recogniser(voiceEnabled):
     # Ask the user for a file path
     file_path = input("Please enter the file path of the image: ")
+    abs_file_path = os.path.abspath(file_path)
 
     # Check if the file exists
-    if not os.path.exists(file_path):
+    if not os.path.exists(abs_file_path):
         print("File does not exist.")
         return
 
@@ -62,6 +63,6 @@ def flag_recogniser(voiceEnabled):
     text_to_speech(voiceEnabled, output)
 
 
-# if __name__ == "__main__":
-#     while True:
-#         flag_recogniser()
+if __name__ == "__main__":
+    while True:
+        flag_recogniser(voiceEnabled=False)
