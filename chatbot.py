@@ -136,7 +136,7 @@ while True:
             2: case_2,
             31: case_31,
             32: case_32,
-            51: case_51(),
+            51: case_51,
             99: case_99,
         }
         # Call the appropriate function based on the command
