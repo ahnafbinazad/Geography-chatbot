@@ -11,34 +11,45 @@ from keras.models import Model
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
 # Load preprocessed train and test images
-train_images = np.load('./data/train_images.npy')
-test_images = np.load('./data/test_images.npy')
-train_labels = np.load('./data/train_labels.npy')
-test_labels = np.load('./data/test_labels.npy')
+train_images = np.load('./data/train_images.npy')  # Loading preprocessed training images
+test_images = np.load('./data/test_images.npy')    # Loading preprocessed testing images
+train_labels = np.load('./data/train_labels.npy')  # Loading training labels
+test_labels = np.load('./data/test_labels.npy')    # Loading testing labels
 
 # Encode labels using LabelEncoder
-label_encoder = LabelEncoder()
-train_labels_encoded = label_encoder.fit_transform(train_labels)
-test_labels_encoded = label_encoder.transform(test_labels)
+label_encoder = LabelEncoder()  # Initializing LabelEncoder object
+train_labels_encoded = label_encoder.fit_transform(train_labels)    # Encoding training labels
+test_labels_encoded = label_encoder.transform(test_labels)          # Encoding testing labels
 
 # Convert encoded labels to one-hot encoding
-num_classes = len(label_encoder.classes_)
-train_labels_one_hot = to_categorical(train_labels_encoded, num_classes=num_classes)
-test_labels_one_hot = to_categorical(test_labels_encoded, num_classes=num_classes)
+num_classes = len(label_encoder.classes_)  # Getting the number of unique classes
+train_labels_one_hot = to_categorical(train_labels_encoded, num_classes=num_classes)  # One-hot encoding training labels
+test_labels_one_hot = to_categorical(test_labels_encoded, num_classes=num_classes)    # One-hot encoding testing labels
 
 
 # Define the function to create and compile the CNN model
 def create_model(filters=32, kernel_size=(3, 3), dropout_rate=0.5):
-    inputs = keras.Input(shape=(28, 28, 3))
-    x = Conv2D(filters=filters, kernel_size=kernel_size, activation="relu")(inputs)
-    x = MaxPooling2D(pool_size=(2, 2))(x)
-    x = Conv2D(filters=filters * 2, kernel_size=kernel_size, activation="relu")(x)
-    x = MaxPooling2D(pool_size=(2, 2))(x)
-    x = Flatten()(x)
-    x = Dense(256, activation="relu")(x)
-    x = Dropout(dropout_rate)(x)
-    outputs = Dense(num_classes, activation="softmax")(x)
-    model = Model(inputs, outputs)
+    """
+    Function to create and compile a Convolutional Neural Network (CNN) model.
+
+    Parameters:
+    - filters: Integer, number of filters in the convolutional layers.
+    - kernel_size: Tuple, size of the convolutional kernels.
+    - dropout_rate: Float, dropout rate for regularization.
+
+    Returns:
+    - model: Compiled CNN model.
+    """
+    inputs = keras.Input(shape=(28, 28, 3))  # Input layer shape
+    x = Conv2D(filters=filters, kernel_size=kernel_size, activation="relu")(inputs)  # First convolutional layer
+    x = MaxPooling2D(pool_size=(2, 2))(x)  # Max pooling layer
+    x = Conv2D(filters=filters * 2, kernel_size=kernel_size, activation="relu")(x)  # Second convolutional layer
+    x = MaxPooling2D(pool_size=(2, 2))(x)  # Max pooling layer
+    x = Flatten()(x)  # Flatten layer
+    x = Dense(256, activation="relu")(x)  # Dense layer with ReLU activation
+    x = Dropout(dropout_rate)(x)  # Dropout layer for regularization
+    outputs = Dense(num_classes, activation="softmax")(x)  # Output layer with softmax activation
+    model = Model(inputs, outputs)  # Creating the model
 
     # Compile the model
     model.compile(optimizer='adam',
@@ -50,9 +61,9 @@ def create_model(filters=32, kernel_size=(3, 3), dropout_rate=0.5):
 
 # Define the hyperparameter search space
 param_dist = {
-    'filters': [32, 64],
-    'kernel_size': [(3, 3), (5, 5)],
-    'dropout_rate': [0.5, 0.6]
+    'filters': [32, 64],                # Number of filters in the convolutional layers
+    'kernel_size': [(3, 3), (5, 5)],    # Size of the convolutional kernels
+    'dropout_rate': [0.5, 0.6]           # Dropout rate for regularization
 }
 
 
@@ -106,13 +117,13 @@ print('\nTest accuracy:', test_acc)
 
 # Define the path to save the trained model
 model_dir = 'model'
-model_filename = 'trained_model.h5'
+model_filename = 'grid_search_training_model.h5'
 model_path = os.path.join(model_dir, model_filename)
 
 # Check if the model directory exists, if not, create it
 if not os.path.exists(model_dir):
     os.makedirs(model_dir)
 
-# Save the trained model
+# Save the trained model with the new filename
 best_model.model.save(model_path)
 print("Model saved successfully.")

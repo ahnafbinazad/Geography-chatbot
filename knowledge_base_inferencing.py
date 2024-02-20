@@ -11,7 +11,7 @@ class KnowledgeBaseInferencing:
 
     def __init__(self, kb_file='logical-kb.csv'):
         self.read_expr = Expression.fromstring
-        self.load_knowledge_base(kb_file)  # Initialize kb directly in __init__
+        self.load_knowledge_base(kb_file)
 
     def load_knowledge_base(self, kb_file):
         kb_data = pd.read_csv(kb_file, header=None)
