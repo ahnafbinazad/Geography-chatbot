@@ -115,5 +115,5 @@ class FuzzyLogicGame:
 
 
 # Testing the game
-game = FuzzyLogicGame()
-game.play()
+# game = FuzzyLogicGame()
+# game.play()

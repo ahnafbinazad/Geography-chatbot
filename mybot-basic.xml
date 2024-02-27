@@ -147,8 +147,13 @@
 
 <!--Game-->
 <category>
-  <pattern>LETS PLAY A GAME</pattern>
+  <pattern>LETS PLAY A LOGIC GAME</pattern>
   <template>#61$</template>
+</category>
+
+<category>
+  <pattern>LETS PLAY A FUZZY GAME</pattern>
+  <template>#62$</template>
 </category>
 
 <!-- Default reaction -->

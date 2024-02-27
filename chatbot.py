@@ -116,9 +116,23 @@ while True:
             flag_recogniser(voiceEnabled)
             return
 
-        def case_61():  # case to play game
-            # game.play(voiceEnabled)
-            fuzzy_game.play()
+        def case_61():  # case to play logic game
+            game.play(voiceEnabled)
+
+        def case_62():  # case to play fuzzy game
+            if voiceEnabled:
+                output = "The fuzzy game does not support text to speech, press y if you would still like to continue"
+                print(output)
+                text_to_speech(voiceEnabled, output)
+                play = input("> ")
+
+                if play == 'y':
+                    fuzzy_game.play()
+                else:
+                    pass
+
+            else:
+                fuzzy_game.play()
 
         def case_99():
             # Fallback to similarity-based response
@@ -144,6 +158,7 @@ while True:
             32: case_32,
             51: case_51,
             61: case_61,
+            62: case_62,
             99: case_99,
         }
         # Call the appropriate function based on the command
