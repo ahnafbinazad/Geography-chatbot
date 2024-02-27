@@ -116,7 +116,7 @@ while True:
             return
 
         def case_61():  # case to play game
-            game.play()
+            game.play(voiceEnabled)
 
         def case_99():
             # Fallback to similarity-based response

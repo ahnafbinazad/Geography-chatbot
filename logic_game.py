@@ -3,6 +3,7 @@ import random
 import pandas as pd
 from nltk.sem import Expression
 from nltk.inference import ResolutionProver
+from text_to_speech import text_to_speech
 
 read_expr = Expression.fromstring
 
@@ -12,7 +13,6 @@ class PlaceGuessingGame:
 
     def __init__(self, kb_file='logical-kb.csv'):
         self.places = ['Australia', 'Asia', 'France', 'Africa', 'Brazil', 'India', 'Europe']
-        # self.kb_inferencing = KnowledgeBaseInferencing()
         self.read_expr = Expression.fromstring
         self.load_knowledge_base(kb_file)
 
@@ -33,22 +33,35 @@ class PlaceGuessingGame:
         negation_expr = self.read_expr('-' + str(new_expr))
         return negation_expr in self.kb
 
-    def play(self):
-        num_rounds = int(input("How many rounds do you want to play? "))
+    def play(self, voiceEnabled):
+        rounds = "How many rounds do you want to play? "
+        print(rounds)
+        text_to_speech(voiceEnabled, rounds)
+        num_rounds = int(input())
         points = 0
 
         for rounds in range(1, num_rounds + 1):
             chosen_place = random.choice(self.places)
-            user_guess = input(f"Round {rounds}: Is {chosen_place} a country or a continent? ").strip().lower()
+            answer = f"Round {rounds}: Is {chosen_place} a country or a continent? "
+            print(answer)
+            text_to_speech(voiceEnabled, answer)
+            user_guess = input().strip().lower()
 
             expr = read_expr(user_guess + '(' + chosen_place.lower() + ')')
 
             result_positive = ResolutionProver().prove(expr, self.kb, verbose=False)
 
             if result_positive:
-                print("That is correct!")
+                output = "That is correct!"
+                print(output)
+                text_to_speech(voiceEnabled, output)
                 points += 1
-            else: print("That is incorrect!")
 
-        print(f"You got {points} out of {num_rounds} questions correct!")
+            else:
+                output = "That is incorrect!"
+                print(output)
+                text_to_speech(voiceEnabled, output)
 
+        output = f"You got {points} out of {num_rounds} questions correct!"
+        print(output)
+        text_to_speech(voiceEnabled,output)
