@@ -7,6 +7,7 @@ from knowledge_base_inferencing import KnowledgeBaseInferencing
 from text_to_speech import text_to_speech
 from logic_game import PlaceGuessingGame
 from google_search import google
+from fuzzy_game import FuzzyLogicGame
 import os
 
 # This time import is a last resort patch to eradicate the error
@@ -15,7 +16,9 @@ import os
 import time
 time.clock = time.time
 
+# Initialize the games class
 game = PlaceGuessingGame()
+fuzzy_game = FuzzyLogicGame()
 
 # Initialize the SimilarityFallback class
 similarity_fallback = SimilarityFallback()
@@ -40,10 +43,8 @@ kern.bootstrap(learnFiles="mybot-basic.xml")
 print("Welcome to the Geography chatbot. Please feel free to ask questions from me. Just make sure they are not out "
       "of this world!")
 
-
+# Askk user if they want to enable text to speech
 voiceEnabled = False
-
-# uncomment to enable text to speech:
 
 voice = input('Press y to enable text to speech: ')
 if voice == 'y':
@@ -116,7 +117,8 @@ while True:
             return
 
         def case_61():  # case to play game
-            game.play(voiceEnabled)
+            # game.play(voiceEnabled)
+            fuzzy_game.play()
 
         def case_99():
             # Fallback to similarity-based response
