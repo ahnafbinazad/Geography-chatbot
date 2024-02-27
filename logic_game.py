@@ -37,7 +37,7 @@ class PlaceGuessingGame:
         rounds = "How many rounds do you want to play? "
         print(rounds)
         text_to_speech(voiceEnabled, rounds)
-        num_rounds = int(input())
+        num_rounds = int(input("> "))
         points = 0
 
         for rounds in range(1, num_rounds + 1):
@@ -45,7 +45,7 @@ class PlaceGuessingGame:
             answer = f"Round {rounds}: Is {chosen_place} a country or a continent? "
             print(answer)
             text_to_speech(voiceEnabled, answer)
-            user_guess = input().strip().lower()
+            user_guess = input("> ").strip().lower()
 
             expr = read_expr(user_guess + '(' + chosen_place.lower() + ')')
 
