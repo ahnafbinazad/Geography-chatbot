@@ -5,6 +5,7 @@ from aiml import Kernel
 from similarity_fallback import SimilarityFallback
 from knowledge_base_inferencing import KnowledgeBaseInferencing
 from text_to_speech import text_to_speech
+from logic_game import PlaceGuessingGame
 from google_search import google
 import os
 
@@ -12,8 +13,9 @@ import os
 # "AttributeError: module 'time' has no attribute 'clock'"
 # TO-DO: Remove this time import
 import time
-
 time.clock = time.time
+
+game = PlaceGuessingGame()
 
 # Initialize the SimilarityFallback class
 similarity_fallback = SimilarityFallback()
@@ -113,6 +115,8 @@ while True:
             flag_recogniser(voiceEnabled)
             return
 
+        def case_61():  # case to play game
+            game.play()
 
         def case_99():
             # Fallback to similarity-based response
@@ -137,6 +141,7 @@ while True:
             31: case_31,
             32: case_32,
             51: case_51,
+            61: case_61,
             99: case_99,
         }
         # Call the appropriate function based on the command

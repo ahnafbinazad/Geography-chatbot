@@ -1,4 +1,13 @@
 "continent (asia)"
+"continent (europe)"
+"continent (africa)"
+"continent (america)"
+
 "country (bangladesh)"
+"country (brazil)"
+"country (france)"
+"country (india)"
+"country (australia)"
+
 "country (p) -> -continent (p)"
 "continent (p) -> -country (p)"

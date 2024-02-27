@@ -142,9 +142,14 @@
 <!--Flag Recognition-->
 <category>
   <pattern> WHAT FLAG IS THIS</pattern>
-  <template>#51</template>
+  <template>#51$</template>
 </category>
 
+<!--Game-->
+<category>
+  <pattern>LETS PLAY A GAME</pattern>
+  <template>#61$</template>
+</category>
 
 <!-- Default reaction -->
 <category>
