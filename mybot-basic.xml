@@ -141,8 +141,14 @@
 
 <!--Flag Recognition-->
 <category>
-  <pattern> WHAT FLAG IS THIS</pattern>
+  <pattern> WHAT FLAG IS IN THIS IMAGE</pattern>
   <template>#51$</template>
+</category>
+
+<!--Video Recognition-->
+<category>
+  <pattern> WHAT FLAG IS IN THIS VIDEO</pattern>
+  <template>#52$</template>
 </category>
 
 <!--Game-->

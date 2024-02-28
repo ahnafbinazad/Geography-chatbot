@@ -8,12 +8,15 @@ from text_to_speech import text_to_speech
 from logic_game import PlaceGuessingGame
 from google_search import google
 from fuzzy_game import FuzzyLogicGame
+from video_recognition import recognise_video
 import os
+
 
 # This time import is a last resort patch to eradicate the error
 # "AttributeError: module 'time' has no attribute 'clock'"
 # TO-DO: Remove this time import
 import time
+
 time.clock = time.time
 
 # Initialize the games class
@@ -114,14 +117,19 @@ while True:
 
         def case_51():  # case for flag recognition
             flag_recogniser(voiceEnabled)
-            return
+
+
+        def case_52():
+            recognise_video()
+
 
         def case_61():  # case to play logic game
             game.play(voiceEnabled)
 
+
         def case_62():  # case to play fuzzy game
             if voiceEnabled:
-                output = "The fuzzy game does not support text to speech, press y if you would still like to continue"
+                output = "The fuzzy game does not support text to speech, press y if you would like to continue."
                 print(output)
                 text_to_speech(voiceEnabled, output)
                 play = input("> ")
@@ -129,10 +137,14 @@ while True:
                 if play == 'y':
                     fuzzy_game.play()
                 else:
+                    output = "Aborting fuzzy game."
+                    print(output)
+                    text_to_speech(voiceEnabled, output)
                     pass
 
             else:
                 fuzzy_game.play()
+
 
         def case_99():
             # Fallback to similarity-based response
@@ -157,6 +169,7 @@ while True:
             31: case_31,
             32: case_32,
             51: case_51,
+            52: case_52,
             61: case_61,
             62: case_62,
             99: case_99,
