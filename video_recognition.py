@@ -19,8 +19,8 @@ class VideoFlagRecognizer:
         return model
 
     # Function to classify the image
-    def classify_image(self, image_path):
-        img_array = FlagRecogniser.preprocess_image(image_path)
+    def classify_image(self, image):
+        img_array = FlagRecogniser.preprocess_image(image)
 
         # Suppress print output during model prediction
         with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f):
@@ -31,14 +31,8 @@ class VideoFlagRecognizer:
         return predicted_class_name
 
     def process_video(self, video_path):
-        # Create directory to save frames if it doesn't exist
-        if not os.path.exists('frames'):
-            os.makedirs('frames')
-
-        abs_file_path = os.path.abspath(video_path)
-
         # Open the video file
-        cap = cv2.VideoCapture(abs_file_path)
+        cap = cv2.VideoCapture(video_path)
 
         # Check if the video opened successfully
         if not cap.isOpened():
@@ -63,6 +57,13 @@ class VideoFlagRecognizer:
             # Classify the frame
             predicted_class_name = self.classify_image(image_path)
 
+            # Add recognised country text on top of the frame
+            cv2.putText(frame, predicted_class_name, (50, 50), cv2.QT_FONT_NORMAL, 1, (0, 255, 0), 2)
+
+            # Display the frame with recognised country
+            cv2.imshow('Frame', frame)
+            cv2.waitKey()  # Adjust the delay as needed
+
             # Count the recognized country
             if predicted_class_name in country_counts:
                 country_counts[predicted_class_name] += 1
@@ -70,9 +71,6 @@ class VideoFlagRecognizer:
                 country_counts[predicted_class_name] = 1
 
             frame_number += 1
-
-            # Delete frame after processing
-            os.remove(image_path)
 
         # Release video capture object
         cap.release()
