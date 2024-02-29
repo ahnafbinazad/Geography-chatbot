@@ -26,6 +26,8 @@ This chatbot is designed to assist users with various geography-related queries 
 - Video Processing Techniques (for flag recognition from videos)
 - Convolutional Neural Network (CNN) Model
 - Hyperparameter Tuning (Bayesian Optimisation, Random Search, Grid Search)
+---
+
 
 ## How to Use
 
@@ -43,4 +45,3 @@ This chatbot is designed to assist users with various geography-related queries 
 4. **Run the Chatbot**:
    - After training (if applicable), run the `chatbot.py` file, and you are good to go.
 
----
