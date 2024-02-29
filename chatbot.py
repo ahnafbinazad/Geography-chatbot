@@ -5,7 +5,6 @@ from aiml import Kernel
 from similarity_fallback import SimilarityFallback
 from knowledge_base_inferencing import KnowledgeBaseInferencing
 from text_to_speech import text_to_speech
-from logic_game import PlaceGuessingGame
 from google_search import google
 from fuzzy_game import FuzzyLogicGame
 from video_recognition import VideoFlagRecognizer
@@ -20,7 +19,6 @@ import time
 time.clock = time.time
 
 # Initialize the games class
-game = PlaceGuessingGame()
 fuzzy_game = FuzzyLogicGame()
 
 # Initialise the flag image recogniser class
@@ -129,10 +127,6 @@ while True:
             video_recognizer.recognise_video()
 
 
-        def case_61():  # case to play logic game
-            game.play(voiceEnabled)
-
-
         def case_62():  # case to play fuzzy game
             if voiceEnabled:
                 output = "The fuzzy game does not support text to speech, press y if you would like to continue."
@@ -176,7 +170,6 @@ while True:
             32: case_32,
             51: case_51,
             52: case_52,
-            61: case_61,
             62: case_62,
             99: case_99,
         }
