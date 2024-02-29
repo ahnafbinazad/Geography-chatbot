@@ -1,4 +1,4 @@
-﻿from flag_recogniser import flag_recogniser
+﻿from flag_recogniser import FlagRecogniser
 from weather import Weather
 import wikipedia
 from aiml import Kernel
@@ -8,7 +8,7 @@ from text_to_speech import text_to_speech
 from logic_game import PlaceGuessingGame
 from google_search import google
 from fuzzy_game import FuzzyLogicGame
-from video_recognition import recognise_video
+from video_recognition import VideoFlagRecognizer
 import os
 
 
@@ -22,6 +22,12 @@ time.clock = time.time
 # Initialize the games class
 game = PlaceGuessingGame()
 fuzzy_game = FuzzyLogicGame()
+
+# Initialise the flag image recogniser class
+flag_recogniser = FlagRecogniser()
+
+# Initialise the flag video recogniser class
+video_recognizer = VideoFlagRecognizer()
 
 # Initialize the SimilarityFallback class
 similarity_fallback = SimilarityFallback()
@@ -116,11 +122,11 @@ while True:
 
 
         def case_51():  # case for flag recognition
-            flag_recogniser(voiceEnabled)
+            flag_recogniser.flag_recogniser(voiceEnabled)
 
 
         def case_52():
-            recognise_video()
+            video_recognizer.recognise_video()
 
 
         def case_61():  # case to play logic game
