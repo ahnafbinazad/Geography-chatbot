@@ -114,6 +114,6 @@ class FuzzyLogicGame:
                 break
 
 
-# Testing the game
-# game = FuzzyLogicGame()
-# game.play()
+if __name__ == '__main__':
+    game = FuzzyLogicGame()
+    game.play()
