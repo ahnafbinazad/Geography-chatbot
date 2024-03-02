@@ -58,11 +58,11 @@ class VideoFlagRecognizer:
             predicted_class_name = self.classify_image(image_path)
 
             # Add recognised country text on top of the frame
-            cv2.putText(frame, predicted_class_name, (50, 50), cv2.QT_FONT_NORMAL, 1, (0, 255, 0), 2)
+            cv2.putText(frame, predicted_class_name, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
             # Display the frame with recognised country
             cv2.imshow('Frame', frame)
-            cv2.waitKey()  # Adjust the delay as needed
+            cv2.waitKey(1)  # Adjust the delay as needed
 
             # Count the recognized country
             if predicted_class_name in country_counts:
