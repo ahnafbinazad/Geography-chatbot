@@ -7,9 +7,11 @@ import warnings
 # Suppress all warnings
 warnings.filterwarnings("ignore")
 
-
 class FuzzyLogicGame:
     def __init__(self):
+        """
+        Initialize the FuzzyLogicGame class.
+        """
         self.kb_file = "game_kb.csv"
         self.statements = [
             "There is uncertainty about whether elephants are the largest land mammals.",
@@ -22,6 +24,12 @@ class FuzzyLogicGame:
         self.score = 0
 
     def load_knowledge_base(self):
+        """
+        Load the knowledge base from a CSV file.
+
+        Returns:
+            list: List of statements and corresponding decisions.
+        """
         kb = []
         with open(self.kb_file, "r") as file:
             reader = csv.reader(file)
@@ -30,6 +38,13 @@ class FuzzyLogicGame:
         return kb
 
     def update_knowledge_base(self, statement, decision):
+        """
+        Update the knowledge base with a new statement and decision.
+
+        Args:
+            statement (str): The statement to be added.
+            decision (str): The decision made by the player.
+        """
         # Check if the number of lines in the file is a multiple of 100
         with open(self.kb_file, "r") as file:
             num_lines = sum(1 for line in file)
@@ -43,6 +58,9 @@ class FuzzyLogicGame:
             file.write('\n')
 
     def rewrite_file(self):
+        """
+        Rewrite the knowledge base file.
+        """
         # Read the existing content of the file
         kb = self.load_knowledge_base()
         # Rewrite the file line by line
@@ -52,12 +70,24 @@ class FuzzyLogicGame:
                 writer.writerow(row)
 
     def present_statement(self):
+        """
+        Present a random statement to the player.
+
+        Returns:
+            str: The presented statement.
+        """
         # Randomly select a statement
         statement = random.choice(self.statements)
         print("Statement:", statement)
         return statement
 
     def get_player_decision(self):
+        """
+        Get the player's decision regarding the presented statement.
+
+        Returns:
+            str: The player's decision.
+        """
         print("How would you interpret this statement?")
         print("1. Treat it as true.")
         print("2. Treat it as false.")
@@ -66,6 +96,13 @@ class FuzzyLogicGame:
         return decision
 
     def evaluate_decision(self, statement, decision):
+        """
+        Evaluate the correctness of the player's decision.
+
+        Args:
+            statement (str): The presented statement.
+            decision (str): The player's decision.
+        """
         kb = self.load_knowledge_base()
 
         # Find the decision stored in the knowledge base for the given statement
@@ -93,9 +130,11 @@ class FuzzyLogicGame:
             print("You're on the right track, but there's some uncertainty in your decision.")
         else:
             print("Incorrect! Your decision is quite different from the correct one.")
-            self.score -= 1
 
     def play(self):
+        """
+        Start the Fuzzy Logic Game.
+        """
         print("Welcome to the Fuzzy Logic Game!")
         print("In this game, you'll be presented with statements related to nature, animals, and general knowledge.")
         print("You must decide whether each statement is true, false, or uncertain.")
@@ -112,7 +151,6 @@ class FuzzyLogicGame:
             if play_again != "y":
                 print("Thanks for playing! Final Score:", self.score)
                 break
-
 
 if __name__ == '__main__':
     game = FuzzyLogicGame()

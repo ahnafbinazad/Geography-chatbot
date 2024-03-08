@@ -3,17 +3,16 @@ import class_names
 
 def get_subdirectories(directory):
     """
-    Get a list of all subdirectories in the specified directory.
+    Retrieves a list of subdirectories within the specified directory.
 
     Args:
-    directory (str): The directory to search.
+        directory (str): The path to the directory.
 
     Returns:
-    list: A list of subdirectories.
+        list: A list of subdirectory names.
     """
     subdirectories = [d for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
     return subdirectories
-
 
 def main():
     # Specify the directory to search
@@ -51,7 +50,6 @@ def main():
             break
     if indexing_match:
         print("The indexing matches.")
-
 
 if __name__ == "__main__":
     main()

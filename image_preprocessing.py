@@ -6,8 +6,17 @@ from PIL import Image
 flags_dir = 'flags'
 data_dir = 'data'
 
-# Function to load and preprocess images
 def load_images_from_directory(directory):
+    """
+    Function to load and preprocess images from a directory.
+
+    Parameters:
+    - directory: String, path to the directory containing images.
+
+    Returns:
+    - images: NumPy array containing preprocessed images.
+    - labels: NumPy array containing labels for the images.
+    """
     images = []
     labels = []
     for country_dir in os.listdir(directory):

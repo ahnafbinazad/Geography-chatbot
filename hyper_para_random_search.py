@@ -26,7 +26,6 @@ num_classes = len(label_encoder.classes_)  # Getting the number of unique classe
 train_labels_one_hot = to_categorical(train_labels_encoded, num_classes=num_classes)  # One-hot encoding training labels
 test_labels_one_hot = to_categorical(test_labels_encoded, num_classes=num_classes)    # One-hot encoding testing labels
 
-
 # Define the function to create and compile the CNN model
 def create_model(filters=32, kernel_size=(3, 3), dropout_rate=0.5):
     """
@@ -58,14 +57,12 @@ def create_model(filters=32, kernel_size=(3, 3), dropout_rate=0.5):
 
     return model
 
-
 # Define the hyperparameter search space
 param_dist = {
     'filters': [32, 64],                # Number of filters in the convolutional layers
     'kernel_size': [(3, 3), (5, 5)],    # Size of the convolutional kernels
     'dropout_rate': [0.5, 0.6]           # Dropout rate for regularization
 }
-
 
 # Create a custom Keras model class that meets scikit-learn's requirements
 class CustomKerasClassifier:
@@ -97,7 +94,6 @@ class CustomKerasClassifier:
         for param, value in params.items():
             setattr(self, param, value)
         return self
-
 
 # Initialize custom Keras model
 keras_model = CustomKerasClassifier()

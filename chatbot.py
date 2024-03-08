@@ -1,4 +1,7 @@
-﻿from flag_recogniser import FlagRecogniser
+﻿# Import necessary modules
+import os
+import time
+from flag_recogniser import FlagRecogniser
 from weather import Weather
 import wikipedia
 from aiml import Kernel
@@ -8,23 +11,18 @@ from text_to_speech import text_to_speech
 from google_search import google
 from fuzzy_game import FuzzyLogicGame
 from video_recognition import VideoFlagRecognizer
-import os
 
-
-# This time import is a last resort patch to eradicate the error
-# "AttributeError: module 'time' has no attribute 'clock'"
-# TO-DO: Remove this time import
-import time
-
+# Temporary fix for an AttributeError in the time module
+# TO-DO: Remove this time import once the issue is resolved
 time.clock = time.time
 
-# Initialize the games class
+# Initialize the FuzzyLogicGame class
 fuzzy_game = FuzzyLogicGame()
 
-# Initialise the flag image recogniser class
+# Initialize the FlagRecogniser class
 flag_recogniser = FlagRecogniser()
 
-# Initialise the flag video recogniser class
+# Initialize the VideoFlagRecognizer class
 video_recognizer = VideoFlagRecognizer()
 
 # Initialize the SimilarityFallback class
@@ -40,19 +38,17 @@ kb_inferencing = KnowledgeBaseInferencing()
 kern = Kernel()
 kern.verbose(False)
 
-# Set the text encoding to None for unicode I/O
+# Set the text encoding to None for Unicode I/O
 kern.setTextEncoding(None)
 
-# Use the Kernel's bootstrap() method to initialize the Kernel
+# Use the Kernel's bootstrap() method to initialize the Kernel with AIML files
 kern.bootstrap(learnFiles="mybot-basic.xml")
 
-# Welcome user
-print("Welcome to the Geography chatbot. Please feel free to ask questions from me. Just make sure they are not out "
-      "of this world!")
+# Welcome message to the user
+print("Welcome to the Geography chatbot. Please feel free to ask questions. Just make sure they are related to geography!")
 
-# Askk user if they want to enable text to speech
+# Ask user if they want to enable text to speech
 voiceEnabled = False
-
 voice = input('Press y to enable text to speech: ')
 if voice == 'y':
     voiceEnabled = True
@@ -60,16 +56,16 @@ if voice == 'y':
 else:
     print('Text to speech will remain disabled.')
 
-# Main loop
+# Main loop for user interaction
 while True:
     # Get user input
     try:
         userInput = input("> ")
-        if voiceEnabled: os.system(f"say {userInput}")
+        if voiceEnabled: os.system(f"say {userInput}")  # Speak user input if text to speech is enabled
     except (KeyboardInterrupt, EOFError) as e:
         bye = 'Bye!'
         print(bye)
-        if voiceEnabled: os.system(f"say {bye}")
+        if voiceEnabled: os.system(f"say {bye}")  # Speak "Bye!" if text to speech is enabled
         break
 
     # Pre-process user input and determine the response agent (if needed)
@@ -84,84 +80,62 @@ while True:
         params = answer[1:].split('$')
         cmd = int(params[0])
 
-
-        def case_0():
+        # Define functions for different command cases
+        def case_0():  # Exit program
             print(params[1])
             exit()
 
-
-        def case_1():
+        def case_1():  # Retrieve summary from Wikipedia
             try:
-                # Get a summary from Wikipedia based on user input
                 wSummary = wikipedia.summary(params[1], sentences=1, auto_suggest=True)
-                # text_to_speech(voiceEnabled, wSummary)
                 print(wSummary)
             except:
-                search = "I can't find the answer for that, let me ask google and give you some websites to look at."
+                search = "I can't find the answer for that. Let me ask Google and give you some websites to look at."
                 print(search)
-                text_to_speech(voiceEnabled, search)
-
                 google(userInput)
 
-
-        def case_2():
-            # Get weather information based on parameters
+        def case_2():  # Retrieve weather information
             weather.get_weather(params, voiceEnabled)
 
+        def case_31():  # Process input for knowledge base inference
+            kb_inferencing.process_input(case=31, params=params, pattern=' IS ', voiceEnabled=voiceEnabled)
 
-        def case_31():  # if input pattern is "I know that * contains *"
-            case = 31
-            kb_inferencing.process_input(case, params, ' IS ', voiceEnabled)
+        def case_32():  # Process input for knowledge base inference
+            kb_inferencing.process_input(case=32, params=params, pattern=' IS ', voiceEnabled=voiceEnabled)
 
-
-        def case_32():  # if the input pattern is "check that * contains *"
-            case = 32
-            kb_inferencing.process_input(case, params, ' IS ', voiceEnabled)
-
-
-        def case_51():  # case for flag recognition
+        def case_51():  # Recognize flags from images
             flag_recogniser.flag_recogniser(voiceEnabled)
 
-
-        def case_52():
+        def case_52():  # Recognize flags from videos
             video_recognizer.recognise_video()
 
-
-        def case_62():  # case to play fuzzy game
+        def case_62():  # Play the fuzzy game
             if voiceEnabled:
-                output = "The fuzzy game does not support text to speech, press y if you would like to continue."
+                output = "The fuzzy game does not support text to speech. Press y if you would like to continue."
                 print(output)
-                text_to_speech(voiceEnabled, output)
                 play = input("> ")
-
                 if play == 'y':
                     fuzzy_game.play()
                 else:
                     output = "Aborting fuzzy game."
                     print(output)
-                    text_to_speech(voiceEnabled, output)
                     pass
-
             else:
                 fuzzy_game.play()
 
-
-        def case_99():
-            # Fallback to similarity-based response
+        def case_99():  # Fallback to similarity-based response
             most_similar_index = similarity_fallback.calculate_cosine_similarity(userInput)
             if most_similar_index is not None:
                 relevant_answer = similarity_fallback.get_relevant_answer(most_similar_index)
                 print(relevant_answer)
                 text_to_speech(voiceEnabled, relevant_answer)
             else:
-                search = "I can't find the answer for that, let me ask google and give you some websites to look at."
+                search = 'I cannot find the answer for that. Let me ask Google and give you some websites to look at.'
                 print(search)
                 text_to_speech(voiceEnabled, search)
-
                 google(userInput)
 
-
-        # Define the switch cases
+        # Define switch cases for command execution
         switch_cases = {
             0: case_0,
             1: case_1,
@@ -173,8 +147,11 @@ while True:
             62: case_62,
             99: case_99,
         }
-        # Call the appropriate function based on the command
+
+        # Execute the appropriate function based on the command
         locals().get(f'case_{cmd}', lambda: print("Invalid command"))()
+
     else:
+        # Print the answer from AIML or other response agents
         print(answer)
-        text_to_speech(voiceEnabled, answer)
+        text_to_speech(voiceEnabled, answer)  # Speak the answer if text to speech is enabled

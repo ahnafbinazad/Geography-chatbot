@@ -25,14 +25,22 @@ test_labels_one_hot = to_categorical(test_labels_encoded, num_classes=num_classe
 # Define the CNN model
 model = keras.Sequential(
     [
-        keras.layers.Conv2D(filters=32, kernel_size=(3, 3), activation="relu", input_shape=(28, 28, 3)),  # Convolutional layer with ReLU activation
-        keras.layers.MaxPooling2D(pool_size=(2, 2)),  # Max pooling layer
-        keras.layers.Conv2D(filters=64, kernel_size=(3, 3), activation="relu"),  # Convolutional layer with ReLU activation
-        keras.layers.MaxPooling2D(pool_size=(2, 2)),  # Max pooling layer
-        keras.layers.Flatten(),  # Flatten layer
-        keras.layers.Dense(256, activation="relu"),  # Dense layer with ReLU activation
-        keras.layers.Dropout(0.5),  # Dropout layer for regularization
-        keras.layers.Dense(num_classes, activation="softmax")  # Output layer with softmax activation
+        # Convolutional layer with ReLU activation
+        keras.layers.Conv2D(filters=32, kernel_size=(3, 3), activation="relu", input_shape=(28, 28, 3)),
+        # Max pooling layer
+        keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        # Convolutional layer with ReLU activation
+        keras.layers.Conv2D(filters=64, kernel_size=(3, 3), activation="relu"),
+        # Max pooling layer
+        keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        # Flatten layer
+        keras.layers.Flatten(),
+        # Dense layer with ReLU activation
+        keras.layers.Dense(256, activation="relu"),
+        # Dropout layer for regularization
+        keras.layers.Dropout(0.5),
+        # Output layer with softmax activation
+        keras.layers.Dense(num_classes, activation="softmax")
     ]
 )
 
